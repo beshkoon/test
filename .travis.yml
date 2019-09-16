@@ -16,10 +16,12 @@ script:
 - cd ../..
 - python blgen.py
 - ls -ahl
-- head -n 30 tst
-- ./espresso-logic/bin/espresso tst > res
+- head -n 15 tst
+- tail -n 15 tst
+- ./espresso-logic/bin/espresso -Dd1merge tst > res
 - ls -ahl
-- head -n 30 res
+- head -n 15 res
+- tail -n 15 res
 - tar czf  res.tar.gz res
 - ls -ahl
 
