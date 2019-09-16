@@ -1,0 +1,38 @@
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.9
+    - g++-4.9
+before_install:
+- export CC="gcc-4.9 -O3" CXX="g++-4.9 -O3"
+install: true
+script:
+- git clone https://github.com/classabbyamp/espresso-logic
+- ls -ahl
+- cd espresso-src
+- make
+- cd ..
+- python blgen.py
+- ls -ahl
+- head -n 30 tst
+- ./bin/espresso tst > res
+- ls -ahl
+- head -n 30 res
+- 7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on res.7z res
+- ls -ahl
+
+#- find -type f -size +500k -exec ls -lh '{}' \;
+#- du -chs docs/en/*
+
+
+deploy:
+  skip_cleanup: true
+  provider: releases
+#  user: "beshkoon"
+#  password: ""
+  api_key: "${test2}"
+  file: "res.7z"
+  on:
+    tags: false
