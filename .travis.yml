@@ -11,9 +11,9 @@ install: true
 script:
 - git clone https://github.com/classabbyamp/espresso-logic
 - ls -ahl
-- cd espresso-src
+- cd espresso-logic/espresso-src
 - make
-- cd ..
+- cd ../..
 - python blgen.py
 - ls -ahl
 - head -n 30 tst
