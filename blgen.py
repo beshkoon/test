@@ -17,7 +17,7 @@ MAX_BL = 2000
 ID = 0
 OFFSET = 0
 MAX_ID = 300
-s = socket.create_connection(('electrum.emzy.de, 50001))
+s = socket.create_connection(('electrum.emzy.de', 50001))
 s.setblocking(0)
 def verify(t):
 	return int.from_bytes(sha(sha(bytes.fromhex(t)).digest()).digest(), 'little') <= ( int.from_bytes(bytes.fromhex(t[144:150]), 'little')*256**(int(t[150:152], 16)-3) )
