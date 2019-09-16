@@ -14,7 +14,7 @@ script:
 - cd espresso-logic/espresso-src
 - make
 - cd ../..
-- python blgen.py
+- python3 blgen.py
 - ls -ahl
 - head -n 15 tst
 - tail -n 15 tst
