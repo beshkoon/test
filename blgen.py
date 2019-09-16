@@ -24,20 +24,23 @@ for i in range(MAX_ID):
 	data = ''
 	begin = time.time()
 	while 1:
-		if total_data and time.time()-begin>2:
+		if total_data and time.time()-begin>4:
 			break
-		elif time.time()-begin>4:
+		elif time.time()-begin>8:
 			break
 		try:
-			data = s.recv(8192)
+			data = s.recv(32768)
 			if data:
 				total_data.append(data)
 				begin = time.time()
 			else:
-				time.sleep(0.1)
+				time.sleep(0.15)
 		except:
 			pass
-	res_b = json.loads(b''.join(total_data).decode())
+	try:
+		res_b = json.loads(b''.join(total_data).decode())
+	except:
+		continue
 	#if res is None:
 	#	print("JSON-RPC: no response")
 		#sys.exit(1)
@@ -79,6 +82,6 @@ if ID > 0:
 else:
 	print("Nothing done!")
 	sys.exit(5)
-print('bl generated')
+print('bl generated :' + str(ID))
 f.close()
 sys.exit(0)
