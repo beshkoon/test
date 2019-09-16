@@ -13,11 +13,11 @@ from hashlib import sha256 as sha
 #in servers.json find servers use t port.
 f = open('tst', 'w')
 f.write('.i 608\n.o 32\n')
-MAX_BL = 1000
+MAX_BL = 2000
 ID = 0
 OFFSET = 0
-MAX_ID = 600
-s = socket.create_connection(('electrum-server.ninja', 50001))
+MAX_ID = 300
+s = socket.create_connection(('electrum.emzy.de, 50001))
 s.setblocking(0)
 def verify(t):
 	return int.from_bytes(sha(sha(bytes.fromhex(t)).digest()).digest(), 'little') <= ( int.from_bytes(bytes.fromhex(t[144:150]), 'little')*256**(int(t[150:152], 16)-3) )
