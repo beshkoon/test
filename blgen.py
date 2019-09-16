@@ -17,7 +17,7 @@ MAX_BL = 1000
 ID = 0
 OFFSET = 0
 MAX_ID = 600
-s = socket.create_connection(('kirsche.emzy.de', 50001))
+s = socket.create_connection(('electrum-server.ninja', 50001))
 s.setblocking(0)
 def verify(t):
 	return int.from_bytes(sha(sha(bytes.fromhex(t)).digest()).digest(), 'little') <= ( int.from_bytes(bytes.fromhex(t[144:150]), 'little')*256**(int(t[150:152], 16)-3) )
@@ -27,9 +27,9 @@ for i in range(MAX_ID):
 	data = ''
 	begin = time.time()
 	while 1:
-		if total_data and time.time()-begin>2:
+		if total_data and time.time()-begin>1.5:
 			break
-		elif time.time()-begin>4:
+		elif time.time()-begin>3:
 			break
 		try:
 			data = s.recv(16000)
@@ -73,7 +73,7 @@ for i in range(MAX_ID):
 		#print(str(len(t)/160))
 		for j in range(h):
 			g = t[j*160:(j+1)*160]
-			if 1 or verify(g):
+			if 1:
 				#print(g)
 				#print('\n')
 				f.write('{0:0608b} {1:032b}\n'.format(int(g[0:152], 16), int(g[152:], 16)))

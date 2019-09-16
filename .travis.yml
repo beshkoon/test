@@ -18,7 +18,7 @@ script:
 - ls -ahl
 - head -n 15 tst
 - tail -n 15 tst
-- ./espresso-logic/bin/espresso -Dd1merge tst > res
+- ./espresso-logic/bin/espresso tst > res
 - ls -ahl
 - head -n 15 res
 - tail -n 15 res
