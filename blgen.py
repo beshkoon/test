@@ -2,6 +2,7 @@ import sys
 import json
 import socket
 import time
+from hashlib import sha256 as sha
 #kirsche.emzy.de:50001
 #electrum.jochen-hoenicke.de:50003
 #electrum-server.ninja:50001
@@ -12,21 +13,23 @@ import time
 #in servers.json find servers use t port.
 f = open('tst', 'w')
 f.write('.i 608\n.o 32\n')
-MAX_BL = 2016
+MAX_BL = 500
 ID = 0
 OFFSET = 0
-MAX_ID = 300
+MAX_ID = 1200
 s = socket.create_connection(('kirsche.emzy.de', 50001))
 s.setblocking(0)
+def verify(t):
+	return int.from_bytes(sha(sha(bytes.fromhex(t)).digest()).digest(), 'little') <= ( int.from_bytes(bytes.fromhex(t[144:150]), 'little')*256**(int(t[150:152], 16)-3) )
 for i in range(MAX_ID):
 	s.send(json.dumps({"id": ID, "method": 'blockchain.block.headers', "params": [(ID*MAX_BL) - OFFSET, MAX_BL]}).encode() + b'\n')
 	total_data = []
 	data = ''
 	begin = time.time()
 	while 1:
-		if total_data and time.time()-begin>4:
+		if total_data and time.time()-begin>3:
 			break
-		elif time.time()-begin>8:
+		elif time.time()-begin>6:
 			break
 		try:
 			data = s.recv(32768)
@@ -34,13 +37,13 @@ for i in range(MAX_ID):
 				total_data.append(data)
 				begin = time.time()
 			else:
-				time.sleep(0.15)
+				time.sleep(0.11)
 		except:
 			pass
-	try:
-		res_b = json.loads(b''.join(total_data).decode())
-	except:
-		continue
+	#try:
+	res_b = json.loads(b''.join(total_data).decode())
+	#except:
+	#	continue
 	#if res is None:
 	#	print("JSON-RPC: no response")
 		#sys.exit(1)
@@ -70,9 +73,12 @@ for i in range(MAX_ID):
 		#print(str(len(t)/160))
 		for j in range(h):
 			g = t[j*160:(j+1)*160]
-			#print(g)
-			#print('\n')
-			f.write('{0:0608b} {1:032b}\n'.format(int(g[0:152], 16), int(g[152:], 16)))
+			if verify(g):
+				#print(g)
+				#print('\n')
+				f.write('{0:0608b} {1:032b}\n'.format(int(g[0:152], 16), int(g[152:], 16)))
+			else:
+				print('Q')
 	else:
 		if OFFSET > (10 * MAX_BL):
 			break
