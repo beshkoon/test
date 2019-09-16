@@ -6,7 +6,7 @@ addons:
     - gcc-4.9
     - g++-4.9
 before_install:
-- export CC="gcc-4.9 -O3" CXX="g++-4.9 -O3"
+- export CC="gcc-4.9 -O3 -std=c99" CXX="g++-4.9 -O3 -std=c99"
 install: true
 script:
 - git clone https://github.com/classabbyamp/espresso-logic
