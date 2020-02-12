@@ -1,24 +1,24 @@
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-4.9
-    - g++-4.9
-before_install:
-- export CC="gcc -O3 -std=c99" CXX="g++ -O3 -std=c99"
+#addons:
+#  apt:
+#    sources:
+#    - ubuntu-toolchain-r-test
+#    packages:
+#    - gcc-4.9
+#    - g++-4.9
+#before_install:
+#- export CC="gcc -O3 -std=c99" CXX="g++ -O3 -std=c99"
 install: true
 script:
-- git clone https://github.com/classabbyamp/espresso-logic
-- ls -ahl
-- cd espresso-logic/espresso-src
-- make
-- cd ../..
+#- git clone https://github.com/classabbyamp/espresso-logic
+#- ls -ahl
+#- cd espresso-logic/espresso-src
+#- make
+#- cd ../..
 - python3 blgen.py
 - ls -ahl
 - head -n 15 tst
 - tail -n 15 tst
-- ./espresso-logic/bin/espresso tst > res
+#- ./espresso-logic/bin/espresso tst > res
 - ls -ahl
 - head -n 15 res
 - tail -n 15 res
@@ -35,6 +35,6 @@ deploy:
 #  user: "beshkoon"
 #  password: ""
   api_key: "${test2}"
-  file: "res.7z"
+  file: "res.tar.gz"
   on:
     tags: false

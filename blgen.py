@@ -76,7 +76,9 @@ for i in range(MAX_ID):
 			if 1:
 				#print(g)
 				#print('\n')
-				f.write('{0:0608b} {1:032b}\n'.format(int(g[0:152], 16), int(g[152:], 16)))
+				#f.write('{0:0608b} {1:032b}\n'.format(int(g[0:152], 16), int(g[152:], 16)))
+				f.write(g)
+				f.write('\n')
 			else:
 				print('Q')
 	else:
