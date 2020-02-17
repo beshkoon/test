@@ -2,7 +2,7 @@ language: android
 dist: trusty
 android:
   components:
-    - build-tools-25.2.3
+    - build-tools-18.1.1
     - android-10
 addons:
    apt:
@@ -21,6 +21,7 @@ install: true
 script:
 - git clone https://github.com/Rupan/espresso
 - cd espresso
+- sed -i -e "s/18.1.1/19.1.0/" project.properties
 - android update project --path ./
 - ant release
 #- git clone https://github.com/classabbyamp/espresso-logic
