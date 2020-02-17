@@ -16,6 +16,7 @@ android:
 install: true
 script:
 - git clone https://github.com/Rupan/espresso
+- cd espresso
 - android update project --path ./
 - ant release
 #- git clone https://github.com/classabbyamp/espresso-logic
