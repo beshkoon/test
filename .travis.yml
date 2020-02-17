@@ -49,7 +49,7 @@ deploy:
   provider: releases
 #  user: "beshkoon"
 #  password: ""
-  api_key: "${test2}"
+  api_key: "${test3}"
   file: "./bin/Espresso-release-unsigned.apk"
   on:
     tags: false
