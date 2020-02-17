@@ -1,3 +1,9 @@
+language: android
+dist: trusty
+android:
+  components:
+    - build-tools-18.1.1
+    - android-10
 #addons:
 #  apt:
 #    sources:
@@ -9,21 +15,24 @@
 #- export CC="gcc -O3 -std=c99" CXX="g++ -O3 -std=c99"
 install: true
 script:
+- git clone https://github.com/Rupan/espresso
+- android update project --path ./
+- ant release
 #- git clone https://github.com/classabbyamp/espresso-logic
 #- ls -ahl
 #- cd espresso-logic/espresso-src
 #- make
 #- cd ../..
-- python3 blgen.py
-- ls -ahl
-- head -n 15 tst
-- tail -n 15 tst
+#- python3 blgen.py
+#- ls -ahl
+#- head -n 15 tst
+#- tail -n 15 tst
 #- ./espresso-logic/bin/espresso tst > res
-- ls -ahl
-- head -n 15 res
-- tail -n 15 res
-- tar czf  res.tar.gz res
-- ls -ahl
+#- ls -ahl
+#- head -n 15 res
+#- tail -n 15 res
+#- tar czf  res.tar.gz res
+#- ls -ahl
 
 #- find -type f -size +500k -exec ls -lh '{}' \;
 #- du -chs docs/en/*
@@ -35,6 +44,6 @@ deploy:
 #  user: "beshkoon"
 #  password: ""
   api_key: "${test2}"
-  file: "res.tar.gz"
+  file: "./bin/Espresso-release-unsigned.apk"
   on:
     tags: false
