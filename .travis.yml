@@ -31,6 +31,7 @@ script:
 - sed -i -e "s/LOCAL_CFLAGS     := -Werror/LOCAL_CFLAGS     := -Werror -fPIE -O3 -std=c99/" jni/espresso/Android.mk
 - sed -i -e "s/APP_ABI := all/APP_ABI := armeabi-v7a arm64-v8a/" jni/Application.mk
 - rm -rf assets/*
+- ls ${ANDROID_NDK_HOME}
 - ndk-build
 - find -name "*espresso"
 #- sed -i -e "s/18.1.1/19.1.0/" project.properties
