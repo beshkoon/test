@@ -2,8 +2,8 @@ language: android
 dist: trusty
 android:
   components:
-    - build-tools-19.1.0
-    - android-10
+    - tools
+    - platform-tools
 addons:
    apt:
      packages:
@@ -16,14 +16,20 @@ addons:
 #    - gcc-4.9
 #    - g++-4.9
 before_install:
-- echo y | sdkmanager "ndk-bundle"
 #- export CC="gcc -O3 -std=c99" CXX="g++ -O3 -std=c99"
 install: true
+- echo y | sdkmanager "ndk-bundle"
+- echo y | sdkmanager "ndk;20.1.5948944"
+before_script:
+- export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk-bundle
+- export ANDROID_NDK_HOME=$ANDROID_NDK_ROOT
+- export PATH=$PATH:${ANDROID_NDK_HOME}
 script:
 - git clone https://github.com/Rupan/espresso
 - cd espresso
 - sed -i -e "s/LOCAL_CFLAGS     := -Werror/LOCAL_CFLAGS     := -Werror -fPIE -O3 -std=c99/" jni/espresso/Android.mk
 - sed -i -e "s/APP_ABI := all/APP_ABI := armeabi-v7a arm64-v8a/" jni/Application.mk
+- rm -rf assets/*
 - ndk-build
 - find -name "*espresso"
 #- sed -i -e "s/18.1.1/19.1.0/" project.properties
