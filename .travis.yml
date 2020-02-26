@@ -15,15 +15,20 @@ addons:
 #    packages:
 #    - gcc-4.9
 #    - g++-4.9
-#before_install:
+before_install:
+- echo y | sdkmanager "ndk-bundle"
 #- export CC="gcc -O3 -std=c99" CXX="g++ -O3 -std=c99"
 install: true
 script:
 - git clone https://github.com/Rupan/espresso
 - cd espresso
-- sed -i -e "s/18.1.1/19.1.0/" project.properties
-- android update project --path ./
-- ant release
+- sed -i -e "s/LOCAL_CFLAGS     := -Werror/LOCAL_CFLAGS     := -Werror -fPIE -O3 -std=c99/" jni/espresso/Android.mk
+- sed -i -e "s/APP_ABI := all/APP_ABI := armeabi-v7a arm64-v8a/" jni/Application.mk
+- ndk-build
+- find -name "*espresso"
+#- sed -i -e "s/18.1.1/19.1.0/" project.properties
+#- android update project --path ./
+#- ant release
 #- git clone https://github.com/classabbyamp/espresso-logic
 #- ls -ahl
 #- cd espresso-logic/espresso-src
