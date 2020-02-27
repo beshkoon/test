@@ -26,7 +26,7 @@ before_script:
 - export PATH=$PATH:${ANDROID_NDK_HOME}
 
 script:
-- git clone https://github.com/Rupan/espresso
+- git clone https://github.com/Rupan/espresso 
 - cd espresso
 - sed -i -e "s/LOCAL_CFLAGS     := -Werror/LOCAL_CFLAGS     := -Werror -fPIE -O3 -std=c99/" jni/espresso/Android.mk
 - sed -i -e "s/APP_ABI := all/APP_ABI := armeabi-v7a arm64-v8a/" jni/Application.mk
