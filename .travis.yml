@@ -32,8 +32,9 @@ script:
 - sed -i -e "s/APP_ABI := all/APP_ABI := armeabi-v7a arm64-v8a/" jni/Application.mk
 - rm -rf assets/*
 - ls ${ANDROID_NDK_HOME}
-- ndk-build
+- find / -name ndk-build -exec '{}' \;
 - find -name "*espresso"
+- tar czf esp_and.tgz assets/
 #- sed -i -e "s/18.1.1/19.1.0/" project.properties
 #- android update project --path ./
 #- ant release
@@ -63,6 +64,6 @@ deploy:
 #  user: "beshkoon"
 #  password: ""
   api_key: "${test3}"
-  file: "./bin/Espresso-release-unsigned.apk"
+  file: "esp_and.tgz"
   on:
     tags: false
